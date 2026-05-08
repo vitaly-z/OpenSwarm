@@ -1,6 +1,6 @@
 # Release Workflow
 
-OpenSwarm releases are GitHub Release driven. The release tag, npm package version, lockfile version, and Python project metadata must use the same version.
+OpenSwarm releases use one normal path: `Build TUI Binaries` builds the required assets, publishes the GitHub Release, then publishes `@vrsen/openswarm` to npm in the same workflow run. The release tag, npm package version, lockfile version, and Python project metadata must use the same version.
 
 ## Release Inputs
 
@@ -19,12 +19,15 @@ OpenSwarm releases are GitHub Release driven. The release tag, npm package versi
 2. Merge the version bump to `main`.
 3. Run the `Build TUI Binaries` workflow from the `main` branch in GitHub Actions. Leave `version` blank to use `package.json`, or pass the exact version without the `v` prefix.
 4. Confirm the workflow creates `vX.Y.Z` with all required binary assets.
-5. Let `Publish npm on Release` publish `@vrsen/openswarm` from the release tag.
+5. Let the downstream npm publish job in the same workflow publish `@vrsen/openswarm` from the release tag.
 
-Pushing a matching `vX.Y.Z` tag also runs the binary release workflow, but the manual workflow is the preferred path because it builds assets and publishes the GitHub Release in one run.
+Pushing a matching `vX.Y.Z` tag also runs the binary release workflow. The manual workflow is the preferred path because it builds assets, publishes the GitHub Release, and publishes npm in one run.
+
+GitHub releases created with `${{ github.token }}` do not start separate `on: release` workflows. `Fallback Publish npm on Release` exists only for releases that are published manually, externally, or through an API token that can trigger release workflows. It is not the normal release path.
 
 ## Release Gates
 
 - The binary release workflow fails if the tag/input version does not match `package.json`, `package-lock.json`, and `pyproject.toml`.
-- The npm publish workflow fails if the GitHub Release is missing any required TUI binary asset.
+- The npm publish job fails if `NPM_TOKEN` is missing, versions do not match, or the GitHub Release is missing any required TUI binary asset.
+- The fallback npm publish workflow runs the same key checks for manually or externally published releases.
 - The npm package uses `publishConfig.access=public` so scoped publishes do not depend on CLI flags alone.
