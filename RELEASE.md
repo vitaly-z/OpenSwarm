@@ -1,10 +1,10 @@
 # Release Workflow
 
-OpenSwarm releases use one normal path: `Build TUI Binaries` builds the required assets, publishes the GitHub Release, then publishes `@vrsen/openswarm` to npm in the same workflow run. The release tag, npm package version, lockfile version, and Python project metadata must use the same version.
+OpenSwarm releases use one normal path: `Build TUI Binaries` builds the required assets, publishes the GitHub Release, then publishes `@vrsen/openswarm` to npm in the same workflow run. The release tag, npm package version, lockfile version, and Python project metadata must use the same plain stable `X.Y.Z` version.
 
 ## Release Inputs
 
-- Source version: `package.json`
+- Source version: plain stable `X.Y.Z` in `package.json`
 - Matching metadata: `package-lock.json` and `pyproject.toml`
 - GitHub tag format: `vX.Y.Z`
 - GitHub release assets:
