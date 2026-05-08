@@ -164,6 +164,7 @@ jobs:
       - name: Create GitHub Release
         shell: bash
         env:
+          GH_REPO: ${{ github.repository }}
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ needs.prepare.outputs.release_tag }}
           TARGET_COMMITISH: ${{ needs.prepare.outputs.target_commitish }}
