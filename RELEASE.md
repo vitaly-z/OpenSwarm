@@ -29,5 +29,5 @@ GitHub releases created with `${{ github.token }}` do not start separate `on: re
 
 - The binary release workflow fails if the tag/input version does not match `package.json`, `package-lock.json`, and `pyproject.toml`.
 - The npm publish job fails if `NPM_TOKEN` is missing, versions do not match, or the GitHub Release is missing any required TUI binary asset.
-- The fallback npm publish workflow runs the same key checks for manually or externally published releases.
+- The fallback npm publish workflow runs the same key checks for manually or externally published stable releases, and skips GitHub prereleases.
 - The npm package uses `publishConfig.access=public` so scoped publishes do not depend on CLI flags alone.

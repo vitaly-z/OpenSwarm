@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   publish:
-    if: github.repository == 'VRSEN/OpenSwarm'
+    if: github.repository == 'VRSEN/OpenSwarm' && github.event.release.prerelease == false
     runs-on: ubuntu-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
